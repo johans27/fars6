@@ -1,0 +1,16 @@
+Package: fars6
+Type: Package
+Title: Fatality Analysis Reporting System (FARS) Analysis
+Version: 0.0.0.9000
+Authors@R: Johans A.
+Maintainer: Johans A. <arica_ja1@hotmail.com>
+Description: Package uses FARS data to produce statistical results
+Depends: R (>= 3.4.3)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr

@@ -1,0 +1,77 @@
+---
+title: "Fatality Analysis Reporting System (FARS)"
+author: "Johans A."
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Package Description
+
+fars package uses data from the National Highway Traffic Safety Administration, specifically uses the Fatality Analysis Reporting System (FARS) which is analysed to produce statistical results and outputs based on five functions within this package
+
+## Load Packages
+
+In order to use this package, you will need to load the following packages: 
+
+```{r, eval=FALSE}
+library(fars)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(maps)
+library(graphics)
+```
+
+## Package Functions
+
+### Function `fars_read`
+
+This function takes a string argurment which is the name of the data filename. If it does not exist, it will generate an error like this: "File 'filename' does not exist", otherwise, the function will recognise the data and will read the filename as a dataframe
+
+```{r, eval=FALSE}
+fars_read("accident_2013.csv.bz2")
+```
+
+### Function `make_filename`
+
+This function takes a numeric or string argument (a year) and a csv filename is created based on that year. the function guarantees that the argument be converted to as integer
+
+```{r, eval=FALSE}
+make_filename(2017)
+```
+
+### Function `fars_read_years`
+
+This function uses the lapply function and the two functions created above to create a new csv filename for each year and then test if the filename exists, then by using the dplyr package only 2 columns will be visible: month and year. If the year is invalid, it will return "NULL"
+
+```{r, eval=FALSE}
+fars_read_years(c(2013,2014,2015))
+```
+
+### Function `fars_summarize_years`
+
+This function takes a list of vectors (years) which are passed in the third function above, then dataframes are binded to be summarised the number of cases per year from a longitudinal format to wide format is converted by using the spead function
+
+```{r, eval=FALSE}
+fars_summarize_years(c(2013,2014,2015))
+```
+
+### Function `fars_map_state`
+
+the function takes two arguments: a state number and year which serve as inputs in the first 2 functions created above. To make sure the remaining functions work appropiately, state number is converted as integer, then, if the state number is not included in the data, an error will appear as "invalid STATE number xxxxx" otherwise the data will be filtered with that state number. In case the filtered data does not have any cases a message will appear that no accidents can be ploted. If there are cases, longitude and latitude data are assigned to cases with NULL longitude and latitude. Finally, a map with cases ploted is created based on the state and year specified as arguments
+
+```{r, eval=FALSE}
+fars_map_state(10, 2013)
+```
